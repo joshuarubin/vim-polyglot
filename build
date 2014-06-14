@@ -73,13 +73,14 @@ PACKS="
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
   csv:chrisbra/csv.vim
+  css:hail2u/vim-css3-syntax
+  css-color:ap/vim-css-color
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   emberscript:heartsentwined/vim-ember-script
   erlang:oscarh/vimerl
   git:tpope/vim-git
-  go:jnwhiteh/vim-golang
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
   haskell:travitch/hasksyn
@@ -88,7 +89,7 @@ PACKS="
   jade:digitaltoad/vim-jade
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
-  json:leshill/vim-json
+  json:elzr/vim-json
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
@@ -102,10 +103,8 @@ PACKS="
   php:StanAngeloff/php.vim
   puppet:rodjek/vim-puppet
   protobuf:uarun/vim-protobuf
-  python:mitsuhiko/vim-python-combined
   r-lang:vim-scripts/R.vim
   rspec:sheerun/rspec.vim
-  ruby:vim-ruby/vim-ruby
   rust:wting/rust.vim
   sbt:derekwyatt/vim-sbt
   scala:derekwyatt/vim-scala
@@ -121,7 +120,6 @@ PACKS="
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc
-  css-color:ap/vim-css-color
 "
 
 rm -rf tmp

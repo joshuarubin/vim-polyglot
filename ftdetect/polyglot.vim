@@ -31,21 +31,6 @@ autocmd BufNewFile,BufRead,StdinReadPost *
       \ if getline(1) =~ '^\(commit\|tree\|object\) \x\{40\}\>\|^tag \S\+$' |
       \   set ft=git |
       \ endif
-let s:current_fileformats = ''
-let s:current_fileencodings = ''
-function! s:gofiletype_pre()
-  let s:current_fileformats = &g:fileformats
-  let s:current_fileencodings = &g:fileencodings
-  set fileencodings=utf-8 fileformats=unix
-  setlocal filetype=go
-endfunction
-function! s:gofiletype_post()
-  let &g:fileformats = s:current_fileformats
-  let &g:fileencodings = s:current_fileencodings
-endfunction
-au BufNewFile *.go setlocal filetype=go fileencoding=utf-8 fileformat=unix
-au BufRead *.go call s:gofiletype_pre()
-au BufReadPost *.go call s:gofiletype_post()
 autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
@@ -62,12 +47,7 @@ fun! s:SelectJavascript()
 endfun
 au BufNewFile,BufRead * call s:SelectJavascript()
 autocmd BufNewFile,BufRead *.json set filetype=json
-augroup json_autocmd
-  autocmd!
-  autocmd FileType json setlocal autoindent
-  autocmd FileType json setlocal formatoptions=tcq2l
-  autocmd FileType json setlocal foldmethod=syntax
-augroup END
+autocmd BufNewFile,BufRead *.jsonp set filetype=json
 au BufNewFile,BufRead *.ejs		set filetype=jst
 au BufNewFile,BufRead *.jst  		set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
@@ -101,33 +81,6 @@ au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.c
 au BufRead,BufNewFile *.cl set filetype=opencl
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au! BufRead,BufNewFile *.pp setfiletype puppet
-function! s:setf(filetype) abort
-  if &filetype !=# a:filetype
-    let &filetype = a:filetype
-  endif
-endfunction
-au BufNewFile,BufRead *.rb,*.rbw,*.gemspec	call s:setf('ruby')
-au BufNewFile,BufRead *.builder,*.rxml,*.rjs,*.ruby call s:setf('ruby')
-au BufNewFile,BufRead [rR]akefile,*.rake	call s:setf('ruby')
-au BufNewFile,BufRead [rR]antfile,*.rant	call s:setf('ruby')
-au BufNewFile,BufRead .irbrc,irbrc		call s:setf('ruby')
-au BufNewFile,BufRead .pryrc			call s:setf('ruby')
-au BufNewFile,BufRead *.ru			call s:setf('ruby')
-au BufNewFile,BufRead Capfile			call s:setf('ruby')
-au BufNewFile,BufRead Gemfile			call s:setf('ruby')
-au BufNewFile,BufRead Guardfile,.Guardfile	call s:setf('ruby')
-au BufNewFile,BufRead Cheffile			call s:setf('ruby')
-au BufNewFile,BufRead Berksfile			call s:setf('ruby')
-au BufNewFile,BufRead [vV]agrantfile		call s:setf('ruby')
-au BufNewFile,BufRead .autotest			call s:setf('ruby')
-au BufNewFile,BufRead *.erb,*.rhtml		call s:setf('eruby')
-au BufNewFile,BufRead [tT]horfile,*.thor	call s:setf('ruby')
-au BufNewFile,BufRead *.rabl			call s:setf('ruby')
-au BufNewFile,BufRead *.jbuilder		call s:setf('ruby')
-au BufNewFile,BufRead Puppetfile		call s:setf('ruby')
-au BufNewFile,BufRead [Bb]uildfile		call s:setf('ruby')
-au BufNewFile,BufRead Appraisals		call s:setf('ruby')
-au BufNewFile,BufRead Podfile,*.podspec		call s:setf('ruby')
 au BufRead,BufNewFile *.rs set filetype=rust
 au BufRead,BufNewFile *.sbt set filetype=sbt
 fun! s:DetectScala()
