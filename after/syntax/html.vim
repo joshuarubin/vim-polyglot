@@ -63,3 +63,13 @@ if !( has('gui_running') || &t_Co==256 ) | finish | endif
 
 " default html syntax should already be including the css syntax
 syn cluster colorableGroup add=htmlString,htmlCommentPart
+" Vim plugin file
+" Language:    
+" Maintainer:  othree <othree@gmail.com>
+" Last Change: 2013/08/26
+" Version:     0.5.1
+" URL:         https://github.com/othree/javascript-libraries-syntax.vim
+
+if b:current_syntax == 'html'
+  call jslibsyntax#load()
+endif

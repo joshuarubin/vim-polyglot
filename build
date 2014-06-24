@@ -90,6 +90,7 @@ PACKS="
   jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
   json:elzr/vim-json
+  jslib:othree/javascript-libraries-syntax.vim
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
