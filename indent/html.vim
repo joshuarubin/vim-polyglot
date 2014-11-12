@@ -61,6 +61,8 @@ call add(s:tags, 'dfn')
 call add(s:tags, 'dir')
 call add(s:tags, 'div')
 call add(s:tags, 'dl')
+call add(s:tags, 'dt')
+call add(s:tags, 'dd')
 call add(s:tags, 'em')
 call add(s:tags, 'fieldset')
 call add(s:tags, 'font')
@@ -185,6 +187,7 @@ if exists('g:html_exclude_tags')
     endfor
 endif
 let s:html_indent_tags = join(s:tags, '\|')
+let s:html_indent_tags = s:html_indent_tags.'\|\w\+\(-\w\+\)\+'
 if exists('g:html_indent_tags')
     let s:html_indent_tags = s:html_indent_tags.'\|'.g:html_indent_tags
 endif
@@ -279,7 +282,7 @@ fun! HtmlIndentGet(lnum)
     if   0 < searchpair(js, '', jse, 'nWb')
     \ && 0 < searchpair(js, '', jse, 'nW')
         " we're inside javascript
-        if getline(searchpair(js, '', '</script>', 'nWb')) !~ '<script [^>]*type=["'']\?text\/\(html\|template\)'
+        if getline(searchpair(js, '', '</script>', 'nWb')) !~ '<script [^>]*type=["'']\?text\/\(html\|\(ng-\)\?template\)'
         \ && getline(lnum) !~ js && getline(a:lnum) !~ jse
             if restore_ic == 0
               setlocal noic

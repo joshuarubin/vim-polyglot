@@ -13,8 +13,16 @@ autocmd BufNewFile,BufRead * call s:DetectCoffee()
 au BufRead,BufNewFile *.csv,*.dat,*.tsv,*.tab set filetype=csv
 autocmd BufNewFile,BufReadPost *.feature,*.story set filetype=cucumber
 au BufNewFile,BufRead Dockerfile set filetype=dockerfile
+au BufRead,BufNewFile *.eex set filetype=eelixir
+au FileType eelixir setl sw=2 sts=2 et iskeyword+=!,?
 au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
 au FileType elixir setl sw=2 sts=2 et iskeyword+=!,?
+function! s:DetectElixir()
+    if getline(1) =~ '^#!.*\<elixir\>'
+        set filetype=elixir
+    endif
+endfunction
+autocmd BufNewFile,BufRead * call s:DetectElixir()
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 autocmd BufNewFile,BufRead *.git/{,modules/**/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
@@ -31,6 +39,10 @@ autocmd BufNewFile,BufRead,StdinReadPost *
       \ if getline(1) =~ '^\(commit\|tree\|object\) \x\{40\}\>\|^tag \S\+$' |
       \   set ft=git |
       \ endif
+autocmd BufNewFile,BufRead *
+      \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
+      \   set filetype=gitsendemail |
+      \ endif
 autocmd BufNewFile,BufRead *.haml,*.hamlbars,*.hamlc setf haml
 autocmd BufNewFile,BufRead *.sass setf sass
 autocmd BufNewFile,BufRead *.scss setf scss
@@ -46,8 +58,6 @@ fun! s:SelectJavascript()
   endif
 endfun
 au BufNewFile,BufRead * call s:SelectJavascript()
-autocmd BufNewFile,BufRead *.json set filetype=json
-autocmd BufNewFile,BufRead *.jsonp set filetype=json
 au BufNewFile,BufRead *.ejs		set filetype=jst
 au BufNewFile,BufRead *.jst  		set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
@@ -70,46 +80,15 @@ autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
       \ else |
       \   setf markdown |
       \ endif
-autocmd BufRead *.html
-    \ if getline(1) =~ '^\(%\|<[%&].*>\)' |
-    \     set filetype=mason |
-    \ endif
 if has("autocmd")
-  au  BufNewFile,BufRead *.mustache,*.handlebars,*.hbs,*.hogan,*.hulk,*.hjs set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+  au  BufNewFile,BufRead *.mustache,*.hogan,*.hulk,*.hjs set filetype=html.mustache syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+  au  BufNewFile,BufRead *.handlebars,*.hbs set filetype=html.handlebars syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
 endif
 au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/*,*/nginx/vhosts.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
 au BufRead,BufNewFile *.cl set filetype=opencl
-function! s:DetectPerl6()
-  let line_no = 1
-  let eof     = line('$')
-  let in_pod  = 0
-  while line_no <= eof
-    let line    = getline(line_no)
-    let line_no = line_no + 1
-    if line =~ '^=\w'
-      let in_pod = 1
-    elseif line =~ '^=\%(end\|cut\)'
-      let in_pod = 0
-    elseif !in_pod
-      let line = substitute(line, '#.*', '', '')
-      if line =~ '^\s*$'
-        continue
-      endif
-      if line =~ '^\s*\%(use\s\+\)\=v6\%(\.\d\%(\.\d\)\=\)\=;'
-        set filetype=perl6 " we matched a 'use v6' declaration
-      elseif line =~ '^\s*\%(\%(my\|our\)\s\+\)\=\(module\|class\|role\|enum\|grammar\)'
-        set filetype=perl6 " we found a class, role, module, enum, or grammar declaration
-      endif
-      break " we either found what we needed, or we found a non-POD, non-comment,
-            " non-Perl 6 indicating line, so bail out
-    endif
-  endwhile
-endfunction
-autocmd BufReadPost *.pl,*.pm,*.t call s:DetectPerl6()
-autocmd BufNew,BufRead *.nqp setf perl6
 autocmd BufNewFile,BufRead *.proto setfiletype proto
 au! BufRead,BufNewFile *.pp setfiletype puppet
-au BufRead,BufNewFile *.rs set filetype=rust
+au! BufRead,BufNewFile Puppetfile setfiletype ruby
 au BufRead,BufNewFile *.sbt set filetype=sbt
 fun! s:DetectScala()
     if getline(1) == '#!/usr/bin/env scala'

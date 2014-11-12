@@ -160,7 +160,7 @@ fu! <sid>Init(startline, endline) "{{{3
  " \ delf <sid>PrepareFolding | delf <sid>OutputFilters |
  " \ delf <sid>SortFilter | delf <sid>GetColumn |
  " \ delf <sid>RemoveLastItem | delf <sid>DisableFolding |
- " \ delf <sid>GetSID | delf <sid>CheckHeaderLine |
+ " \ delf <sid>CheckHeaderLine |
  " \ delf <sid>AnalyzeColumn | delf <sid>Vertfold |
  " \ delf <sid>InitCSVFixedWidth | delf <sid>LocalCmd |
  " \ delf <sid>CommandDefinitions | delf <sid>NumberFormat |
@@ -517,7 +517,13 @@ fu! <sid>WColumn(...) "{{{3
     " Return on which column the cursor is
     let _cur = getpos('.')
     if !exists("b:csv_fixed_width_cols")
-        let line=getline('.')
+        if line('.') > 1 && mode('') != 'n'
+            " in insert mode, get line from above, just in case the current
+            " line is empty
+            let line = getline(line('.')-1)
+        else
+            let line=getline('.')
+        endif
         " move cursor to end of field
         "call search(b:col, 'ec', line('.'))
         call search(b:col, 'ec')
@@ -1488,12 +1494,11 @@ fu! <sid>PrepareFolding(add, match)  "{{{3
 "    for val in sort(values(b:csv_filter), '<sid>SortFilter')
 "        let @/ .= val.pat . (val.id == s:filter_count ? '' : '\&')
 "    endfor
-    let sid = <sid>GetSID()
 
     " Fold settings:
     call <sid>LocalSettings('fold')
     " Don't put spaces between the arguments!
-    exe 'setl foldexpr=<snr>' . sid . '_FoldValue(v:lnum,b:csv_filter)'
+    exe 'setl foldexpr=<snr>' . s:SID . '_FoldValue(v:lnum,b:csv_filter)'
 
     " Move folded area to the bottom, so there is only on consecutive
     " non-folded area
@@ -1541,8 +1546,7 @@ fu! <sid>OutputFilters(bang) "{{{3
             call <sid>Warn("No filters defined currently!")
             return
         else
-            let sid = <sid>GetSID()
-            exe 'setl foldexpr=<snr>' . sid . '_FoldValue(v:lnum,b:csv_filter)'
+            exe 'setl foldexpr=<snr>' . s:SID . '_FoldValue(v:lnum,b:csv_filter)'
         endif
     endif
 endfu
@@ -1588,14 +1592,11 @@ fu! <sid>DisableFolding() "{{{3
     endif
 endfu
 
-fu! <sid>GetSID() "{{{3
-    if v:version > 703 || v:version == 703 && has("patch032")
-        return maparg('W', "", "", 1).sid
-    else
-        "return substitute(maparg('W'), '\(<SNR>\d\+\)_', '\1', '')
-        return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_GetSID$')
-    endif
+fu! <sid>DetermineSID()
+    let s:SID = matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_DetermineSID$')
 endfu
+call s:DetermineSID()
+delf s:DetermineSID
 
 fu! <sid>NumberFormat() "{{{3
     let s:nr_format = [',', '.']
@@ -2403,6 +2404,9 @@ fu! csv#EvalColumn(nr, func, first, last) range "{{{3
     call <sid>CheckHeaderLine()
     let nr = matchstr(a:nr, '^\-\?\d\+')
     let col = (empty(nr) ? <sid>WColumn() : nr)
+    if col == 0
+        let col = 1
+    endif
     " don't take the header line into consideration
     let start = a:first - 1 + s:csv_fold_headerline
     let stop  = a:last  - 1 + s:csv_fold_headerline
@@ -2521,8 +2525,18 @@ fu! CSV_CloseBuffer(buffer) "{{{3
         augroup! CSV_QuitPre
     endtry
 endfu
-        
 
+fu! CSVSum(col, fmt, first, last) "{{{3
+    let first = a:first
+    let last  = a:last
+    if empty(first)
+        let first = 1
+    endif
+    if empty(last)
+        let last = line('$')
+    endif
+    return csv#EvalColumn(a:col, '<sid>SumColumn', first, last)
+endfu
 " Initialize Plugin "{{{2
 let b:csv_start = exists("b:csv_start") ? b:csv_start : 1
 let b:csv_end   = exists("b:csv_end") ? b:csv_end : line('$')

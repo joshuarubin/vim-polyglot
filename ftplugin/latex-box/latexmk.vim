@@ -23,6 +23,9 @@ endif
 if ! exists('g:LatexBox_quickfix')
 	let g:LatexBox_quickfix = 1
 endif
+if ! exists('g:LatexBox_personal_latexmkrc')
+	let g:LatexBox_personal_latexmkrc = 0
+endif
 
 " }}}
 
@@ -177,7 +180,9 @@ function! LatexBox_Latexmk(force)
 		let cmd = 'cd ' . texroot . ' && '
 	endif
 	let cmd .= env . ' latexmk'
-	let cmd .= ' -' . g:LatexBox_output_type
+	if ! g:LatexBox_personal_latexmkrc
+		let cmd .= ' -' . g:LatexBox_output_type
+	endif
 	let cmd .= ' -quiet '
 	let cmd .= g:LatexBox_latexmk_options
 	if a:force
@@ -413,10 +418,20 @@ function! LatexBox_LatexErrors(status, ...)
 	if a:status < 0
 		botright copen
 	else
-		" Write status message to screen
+		" Only open window when an error/warning is detected
+		if g:LatexBox_quickfix >= 3
+					\ ? s:log_contains_error(log)
+					\ : g:LatexBox_quickfix > 0
+			belowright cw
+			if g:LatexBox_quickfix == 2 || g:LatexBox_quickfix == 4
+				wincmd p
+			endif
+		endif
 		redraw
+
+		" Write status message to screen
 		if a:status > 0 || len(getqflist())>1
-			if s:log_contains_error(fnameescape(log))
+			if s:log_contains_error(log)
 				let l:status_msg = ' ... failed!'
 			else
 				let l:status_msg = ' ... there were warnings!'
@@ -425,14 +440,6 @@ function! LatexBox_LatexErrors(status, ...)
 			let l:status_msg = ' ... success!'
 		endif
 		echomsg 'Compiling to ' . g:LatexBox_output_type . l:status_msg
-
-		" Only open window when an error/warning is detected
-		if g:LatexBox_quickfix
-			belowright cw
-			if g:LatexBox_quickfix==2
-				wincmd p
-			endif
-		endif
 	endif
 endfunction
 
