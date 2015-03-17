@@ -106,10 +106,9 @@ fu! <sid>DoHighlight() "{{{3
 		    \ . s:col . '/ contains=CSVDelimiter'
 	exe 'syn match CSVColumnOdd nextgroup=CSVColumnEven /'
 		    \ . s:col . '/ contains=CSVDelimiter'
-
-	exe 'syn match CSVColumnHeaderEven nextgroup=CSVColumnHeaderOdd /\%1l'
+	exe 'syn match CSVColumnHeaderEven nextgroup=CSVColumnHeaderOdd /\%<'. (get(b:, 'csv_headerline', 1)+1).'l'
 		    \. s:col . '/ contains=CSVDelimiter'
-	exe 'syn match CSVColumnHeaderOdd nextgroup=CSVColumnHeaderEven /\%1l'
+	exe 'syn match CSVColumnHeaderOdd nextgroup=CSVColumnHeaderEven /\%<'. (get(b:, 'csv_headerline', 1)+1).'l'
 		    \. s:col . '/ contains=CSVDelimiter'
     else
 	for i in range(len(b:csv_fixed_width_cols))
@@ -137,36 +136,12 @@ fu! <sid>DoSyntaxDefinitions() "{{{3
 
     hi def link CSVColumnHeaderOdd  WarningMsg
     hi def link CSVColumnHeaderEven WarningMsg
-    hi def link CSVColumnOdd	    DiffAdd
-    hi def link CSVColumnEven	    DiffChange
-    " Old Version
-    if 0
-	if &t_Co < 88
-	    if !exists("b:csv_fixed_width_cols")
-		hi default CSVColumnHeaderOdd ctermfg=DarkRed ctermbg=15
-		    \ guibg=grey80 guifg=black term=underline cterm=standout,bold
-		    \ gui=bold,underline 
-	    endif
-	    hi default CSVColumnOdd	ctermfg=DarkRed ctermbg=15 guibg=grey80
-		    \ guifg=black term=underline cterm=bold gui=underline
-	else
-	    if !exists("b:csv_fixed_width_cols")
-		hi default CSVColumnHeaderOdd ctermfg=darkblue ctermbg=white
-		    \ guibg=grey80 guifg=black cterm=standout,underline
-		    \ gui=bold,underline
-	    endif
-	    hi default CSVColumnOdd ctermfg=darkblue ctermbg=white guibg=grey80
-		    \ guifg=black cterm=reverse,underline gui=underline
-	endif
-	    
-	" ctermbg=8 should be safe, even in 8 color terms
-	if !exists("b:csv_fixed_width_cols")
-	    hi default CSVColumnHeaderEven ctermfg=white ctermbg=darkgrey
-		    \ guibg=grey50 guifg=black term=bold cterm=standout,underline
-		    \ gui=bold,underline 
-	endif
-	hi default CSVColumnEven ctermfg=white ctermbg=darkgrey guibg=grey50
-		    \ guifg=black term=bold cterm=underline gui=bold,underline 
+    if get(g:, 'csv_no_column_highlight', 0)
+	hi def link CSVColumnOdd	    Normal
+	hi def link CSVColumnEven	    Normal
+    else
+	hi def link CSVColumnOdd	    DiffAdd
+	hi def link CSVColumnEven	    DiffChange
     endif
 endfun
 

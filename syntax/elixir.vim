@@ -15,12 +15,14 @@ syn cluster elixirNotTop contains=@elixirRegexSpecial,@elixirStringContained,@el
 syn match elixirComment '#.*' contains=elixirTodo
 syn keyword elixirTodo FIXME NOTE TODO OPTIMIZE XXX HACK contained
 
-syn keyword elixirKeyword is_atom is_binary is_bitstring is_boolean is_float is_function is_integer is_list is_number is_pid is_port is_record is_reference is_tuple is_exception
-syn keyword elixirKeyword case cond for if unless try receive send
+syn keyword elixirKeyword is_atom is_binary is_bitstring is_boolean is_float is_function is_integer is_list is_map is_number is_pid is_port is_record is_reference is_tuple is_exception
+syn keyword elixirKeyword case when cond for if unless try receive send
 syn keyword elixirKeyword exit raise throw after rescue catch else do end
 syn keyword elixirKeyword quote unquote super
 
 syn keyword elixirInclude import require alias use
+
+syn keyword elixirSelf self
 
 syn match elixirId '\<[_a-zA-Z]\w*[!?]\?\>'
 
@@ -68,7 +70,7 @@ syn region elixirRegex matchgroup=elixirRegexDelimiter start="%r/" end="/[uiomxf
 syn cluster elixirRegexSpecial    contains=elixirRegexEscape,elixirRegexCharClass,elixirRegexQuantifier,elixirRegexEscapePunctuation
 syn cluster elixirStringContained contains=elixirInterpolation,elixirRegexEscape,elixirRegexCharClass
 
-syn region elixirString        matchgroup=elixirStringDelimiter start="'" end="'" skip="\\'"
+syn region elixirString        matchgroup=elixirStringDelimiter start="'" end="'" skip="\\'|\\\\"
 syn region elixirString        matchgroup=elixirStringDelimiter start='"' end='"' skip='\\"' contains=@elixirStringContained
 syn region elixirInterpolation matchgroup=elixirInterpolationDelimiter start="#{" end="}" contained contains=ALLBUT,elixirComment,@elixirNotTop
 
@@ -160,6 +162,7 @@ hi def link elixirPseudoVariable         Constant
 hi def link elixirAlias                  Type
 hi def link elixirBoolean                Boolean
 hi def link elixirVariable               Identifier
+hi def link elixirSelf                   Identifier
 hi def link elixirUnusedVariable         Comment
 hi def link elixirNumber                 Number
 hi def link elixirDocString              String
