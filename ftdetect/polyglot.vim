@@ -1,6 +1,6 @@
 au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 au BufNewFile,BufRead *.blade.php set filetype=blade
-autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn setlocal filetype=clojure
+autocmd BufNewFile,BufRead *.clj,*.cljs,*.edn,*.cljx,*.cljc setlocal filetype=clojure
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufNewFile,BufRead *Cakefile set filetype=coffee
 autocmd BufNewFile,BufRead *.coffeekup,*.ck set filetype=coffee
@@ -61,10 +61,12 @@ fun! s:SelectJavascript()
   endif
 endfun
 au BufNewFile,BufRead * call s:SelectJavascript()
-autocmd BufNewFile,BufRead *.json set filetype=json
-autocmd BufNewFile,BufRead *.jsonp set filetype=json
-au BufNewFile,BufRead *.ejs		set filetype=jst
-au BufNewFile,BufRead *.jst  		set filetype=jst
+autocmd BufNewFile,BufRead *.json setlocal filetype=json
+autocmd BufNewFile,BufRead *.jsonp setlocal filetype=json
+autocmd BufNewFile,BufRead *.geojson setlocal filetype=json
+au BufNewFile,BufRead *.ejs set filetype=jst
+au BufNewFile,BufRead *.jst set filetype=jst
+au BufNewFile,BufRead *.djs set filetype=jst
 au BufNewFile,BufRead *.hamljs set filetype=jst
 au BufNewFile,BufRead *.ect set filetype=jst
 autocmd BufNewFile,BufRead *.less setf less
@@ -114,7 +116,7 @@ function! s:DetectPerl6()
       endif
       if line =~ '^\s*\%(use\s\+\)\=v6\%(\.\d\%(\.\d\)\=\)\=;'
         set filetype=perl6 " we matched a 'use v6' declaration
-      elseif line =~ '^\s*\%(\%(my\|our\)\s\+\)\=\(module\|class\|role\|enum\|grammar\)'
+      elseif line =~ '^\s*\%(\%(my\|our\)\s\+\)\=\%(unit\s\+\)\=\(module\|class\|role\|enum\|grammar\)'
         set filetype=perl6 " we found a class, role, module, enum, or grammar declaration
       endif
       break " we either found what we needed, or we found a non-POD, non-comment,

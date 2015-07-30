@@ -141,7 +141,7 @@ endfunction
 
 function! LatexBox_Latexmk(force)
 	" Define often used names
-	let basepath = LatexBox_GetTexBasename(1)
+	let basepath = LatexBox_GetBuildBasename(1)
 	let basename = fnamemodify(basepath, ':t')
 	let texroot = shellescape(LatexBox_GetTexRoot())
 	let mainfile = fnameescape(fnamemodify(LatexBox_GetMainTexFile(), ':t'))
@@ -166,7 +166,11 @@ function! LatexBox_Latexmk(force)
 	elseif match(&shell, '/tcsh$') >= 0
 		let env = 'setenv max_print_line ' . max_print_line . '; '
 	else
-		let env = 'max_print_line=' . max_print_line
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let env = 'set max_print_line ' . max_print_line . '; and '
+		else
+			let env = 'max_print_line=' . max_print_line
+		endif
 	endif
 
 	" Set environment options
@@ -177,7 +181,11 @@ function! LatexBox_Latexmk(force)
 		" Make sure to switch drive as well as directory
 		let cmd = 'cd /D ' . texroot . ' && '
 	else
-		let cmd = 'cd ' . texroot . ' && '
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd = 'cd ' . texroot . '; and '
+		else
+			let cmd = 'cd ' . texroot . ' && '
+		endif
 	endif
 	let cmd .= env . ' latexmk'
 	if ! g:LatexBox_personal_latexmkrc
@@ -203,7 +211,11 @@ function! LatexBox_Latexmk(force)
 	if has('win32')
 		let cmd .= ' >nul'
 	else
-		let cmd .= ' &>/dev/null'
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd .= ' >/dev/null ^/dev/null'
+		else
+			let cmd .= ' &>/dev/null'
+		endif
 	endif
 
 	if g:LatexBox_latexmk_async
@@ -357,7 +369,7 @@ function! LatexBox_LatexmkClean(cleanall)
 		return
 	endif
 
-	let basename = LatexBox_GetTexBasename(1)
+	let basename = LatexBox_GetBuildBasename(1)
 
 	if has_key(g:latexmk_running_pids, basename)
 		echomsg "don't clean when latexmk is running"
@@ -490,7 +502,7 @@ function! LatexBox_LatexmkStatus(detailed)
 			echo "latexmk is running (" . plist . ")"
 		endif
 	else
-		let basename = LatexBox_GetTexBasename(1)
+		let basename = LatexBox_GetBuildBasename(1)
 		if has_key(g:latexmk_running_pids, basename)
 			echo "latexmk is running"
 		else
@@ -504,12 +516,12 @@ endfunction
 function! LatexBox_LatexmkStop(silent)
 	if empty(g:latexmk_running_pids)
 		if !a:silent
-			let basepath = LatexBox_GetTexBasename(1)
+			let basepath = LatexBox_GetBuildBasename(1)
 			let basename = fnamemodify(basepath, ':t')
 			echoerr "latexmk is not running for `" . basename . "'"
 		endif
 	else
-		let basepath = LatexBox_GetTexBasename(1)
+		let basepath = LatexBox_GetBuildBasename(1)
 		let basename = fnamemodify(basepath, ':t')
 		if has_key(g:latexmk_running_pids, basepath)
 			call s:kill_latexmk_process(g:latexmk_running_pids[basepath])

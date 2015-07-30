@@ -134,6 +134,7 @@ syntax keyword cppSTLfunctional binary_negate
 syntax keyword cppSTLfunctional bit_and
 syntax keyword cppSTLfunctional bit_not
 syntax keyword cppSTLfunctional bit_or
+syntax keyword cppSTLfunctional bit_xor
 syntax keyword cppSTLfunctional divides
 syntax keyword cppSTLfunctional equal_to
 syntax keyword cppSTLfunctional greater
@@ -170,7 +171,7 @@ syntax keyword cppSTLfunction back
 syntax keyword cppSTLfunction back_inserter
 syntax keyword cppSTLfunction bad
 syntax keyword cppSTLfunction beg
-syntax keyword cppSTLfunction begin
+"syntax keyword cppSTLfunction begin
 syntax keyword cppSTLfunction binary_compose
 syntax keyword cppSTLfunction binary_negate
 syntax keyword cppSTLfunction binary_search
@@ -197,14 +198,14 @@ syntax keyword cppSTLfunction count
 syntax keyword cppSTLfunction count_if
 syntax keyword cppSTLfunction c_str
 syntax keyword cppSTLfunction ctime
-syntax keyword cppSTLfunction data
+"syntax keyword cppSTLfunction data
 syntax keyword cppSTLfunction denorm_min
 syntax keyword cppSTLfunction destroy
 syntax keyword cppSTLfunction difftime
 syntax keyword cppSTLfunction distance
 syntax keyword cppSTLfunction div
 syntax keyword cppSTLfunction empty
-syntax keyword cppSTLfunction end
+"syntax keyword cppSTLfunction end
 syntax keyword cppSTLfunction eof
 syntax keyword cppSTLfunction epsilon
 syntax keyword cppSTLfunction equal
@@ -417,7 +418,7 @@ syntax keyword cppSTLfunction signal
 syntax keyword cppSTLfunction signaling_NaN
 syntax keyword cppSTLfunction sin
 syntax keyword cppSTLfunction sinh
-syntax keyword cppSTLfunction size
+"syntax keyword cppSTLfunction size
 syntax keyword cppSTLfunction sort
 syntax keyword cppSTLfunction sort_heap
 syntax keyword cppSTLfunction splice
@@ -459,13 +460,13 @@ syntax keyword cppSTLfunction swap_ranges
 syntax keyword cppSTLfunction swprintf
 syntax keyword cppSTLfunction swscanf
 syntax keyword cppSTLfunction sync_with_stdio
-syntax keyword cppSTLfunction system
+"syntax keyword cppSTLfunction system
 syntax keyword cppSTLfunction tan
 syntax keyword cppSTLfunction tanh
 syntax keyword cppSTLfunction tellg
 syntax keyword cppSTLfunction tellp
-syntax keyword cppSTLfunction test
-syntax keyword cppSTLfunction time
+"syntax keyword cppSTLfunction test
+"syntax keyword cppSTLfunction time
 syntax keyword cppSTLfunction tmpfile
 syntax keyword cppSTLfunction tmpnam
 syntax keyword cppSTLfunction tolower
@@ -760,6 +761,7 @@ syntax keyword cppSTLconstant WCHAR_MAX
 if !exists("cpp_no_cpp11")
     syntax keyword cppSTLtype nullptr_t max_align_t
     syntax keyword cppSTLtype type_index
+    syntax keyword cppSTLconstant nullptr
 
     " type_traits
     syntax keyword cppSTLtype is_void
@@ -1052,7 +1054,7 @@ if !exists("cpp_no_cpp11")
     syntax keyword cppSTLconstant FLT_EVAL_METHOD
 
     " complex
-    syntax keyword cppSTLfunction proj
+    "syntax keyword cppSTLfunction proj
 
     " random
     syntax keyword cppSTLtype linear_congruential_engine
