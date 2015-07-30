@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    Backbone.js for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -60,4 +62,6 @@ if version >= 508 || !exists("did_backbone_ls_syntax_inits")
 
 
   delcommand HiLink
+endif
+
 endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 syn match cssFontProp contained "\<font-feature-settings\>"
 syn match cssFontProp contained "\<font-kerning\>"
 syn match cssFontProp contained "\<font-language-override\>"
@@ -15,3 +17,5 @@ syn match cssFontAttr contained "\<\(diagonal\|stacked\)-fractions\>"
 syn match cssFontAttr contained "\<slashed-zero\>"
 syn match cssFontAttr contained "\<proportional-width\>"
 syn region cssFunction contained matchgroup=cssFunctionName start="\<\(stylistic\|styleset\|character-variant\|swash\|ornaments\|annotation\)\s*(" end=")" oneline keepend
+
+endif

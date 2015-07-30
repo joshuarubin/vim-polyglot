@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim plugin file
 " Language:    JS Lib syntax loader
 " Maintainer:  othree <othree@gmail.com>
@@ -58,3 +60,5 @@ function! jslibsyntax#load()
   endif
 endfunction
 
+
+endif

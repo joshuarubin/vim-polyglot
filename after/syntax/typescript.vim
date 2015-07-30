@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim plugin file
 " Language:    
 " Maintainer:  othree <othree@gmail.com>
@@ -7,4 +9,6 @@
 
 if b:current_syntax == 'typescript'
   call jslibsyntax#load()
+endif
+
 endif

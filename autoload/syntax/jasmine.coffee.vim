@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    jasmine for coffee
 " Maintainer:  othree <othree@gmail.com>
@@ -61,4 +63,6 @@ if version >= 508 || !exists("did_requirejs_coffee_syntax_inits")
   HiLink coffeeJExpectMethods  PreProc
 
   delcommand HiLink
+endif
+
 endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    AngularJS for javascript
 " Maintainer:  othree <othree@gmail.com>
@@ -33,3 +35,5 @@ syntax keyword  htmlArg contained expression autoscroll count when offset on
 syntax keyword  htmlTagName contained ng-change ng-form ng-view
 syntax keyword  htmlTagName contained ng-include ng-pluralize ng-switch 
 
+
+endif

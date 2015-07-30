@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    JS Lib syntax post process for coffee
 " Maintainer:  othree <othree@gmail.com>
@@ -16,3 +18,5 @@ syntax cluster props add=@coffeeRProp
 syntax region  coffeeString     start=/"/  skip=/\\\\\|\\"/  end=/"/ contains=@coffeeInterpString,@jSelectors
 syntax region  coffeeString     start=/'/  skip=/\\\\\|\\'/  end=/'/ contains=@coffeeBasicString,@jSelectors
 
+
+endif

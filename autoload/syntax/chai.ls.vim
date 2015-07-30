@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    chai.js for ls
 " Maintainer:  tkrugg <y.mammar@gmail.com>
@@ -46,4 +48,6 @@ if version >= 508 || !exists("did_chai_ls_syntax_inits")
   HiLink ls_asserter       PreProc
 
   delcommand HiLink
+endif
+
 endif

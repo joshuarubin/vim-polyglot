@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 " TODO: create cssLineboxProp group and cssLineboxAttr group
 syn match cssFontProp contained "\<alignment-\(adjust\|baseline\)\>"
 syn match cssFontProp contained "\<baseline-shift\>"
@@ -14,3 +16,5 @@ syn match cssFontAttr contained "\<\(exclude\|include\)-ruby\>"
 syn match cssFontAttr contained "\<\(consider\|disregard\)-shift\>"
 syn match cssFontAttr contained "\<\(\(inline\|block\)-line\|max\|grid\)-height\>"
 syn match cssFontAttr contained "\<\(font\|text\|max\)-size\>"
+
+endif

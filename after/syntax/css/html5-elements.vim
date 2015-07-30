@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 " HTML5 new elements
 
 " Sections
@@ -17,3 +19,5 @@ syn keyword cssTagName datalist keygen output progress meter
 
 " Scripting
 syn keyword cssTagName template canvas
+
+endif

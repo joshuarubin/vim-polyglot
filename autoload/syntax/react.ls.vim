@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    React for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -34,4 +36,6 @@ if version >= 508 || !exists("did_jquery_ls_syntax_inits")
   HiLink lsRComponent      PreProc
 
   delcommand HiLink
+endif
+
 endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    underscore.js for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -91,4 +93,6 @@ if version >= 508 || !exists("did_underscore_ls_syntax_inits")
   HiLink ls_lodash         PreProc
 
   delcommand HiLink
+endif
+
 endif

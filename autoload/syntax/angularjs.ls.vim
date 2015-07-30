@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    AngularJS for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -92,4 +94,6 @@ if version >= 508 || !exists("did_angularjs_ls_syntax_inits")
   HiLink lsAScookieStoreMethods PreProc
 
   delcommand HiLink
+endif
+
 endif

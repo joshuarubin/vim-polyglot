@@ -1,6 +1,10 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 " TODO: create cssTransitionsProp group and cssTransitionsAttr group
 syn match cssFontProp contained "\<transition\(-\(property\|duration\|timing-function\|delay\)\)\=\>"
 syn keyword cssFontAttr contained linear
 syn match cssFontAttr contained "\<ease\(-\(in\|out\|in-out\)\)\=\>"
 syn match cssFontAttr contained "\<step-\(start\|end\)\>"
 syn region cssFunction contained matchgroup=cssFunctionName start="\<\(steps\|cubic-bezier\)\s*(" end=")" oneline keepend
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    JS Lib syntax post process for javascript
 " Maintainer:  othree <othree@gmail.com>
@@ -13,4 +15,6 @@ syntax cluster props add=@javascriptRProp
 
 if !exists("javascript_props")
   syntax match javascriptLDot /\./ containedin=ALLBUT,javascriptComment,javascriptLineComment,javascriptLineComment,javascriptString nextgroup=@props
+endif
+
 endif

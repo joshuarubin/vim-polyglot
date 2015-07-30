@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 " TODO: create cssCounterStyleDescriptor for `@counter-style` descriptors
 syn region cssInclude start=/@counter-style\>/ end=/\ze{/ skipwhite skipnl contains=css.*Prop,css.*Attr,cssValueInteger,cssValueLength,cssMediaKeyword,cssVendor,cssIncludeKeyword,cssComment nextgroup=cssMediaBlock
 syn keyword cssGeneratedContentProp contained system negative prefix suffix range pad fallback
@@ -12,3 +14,5 @@ syn match cssGeneratedContentAttr contained "\<disclosure-\(open\|closed\)\>"
 syn match cssGeneratedContentAttr contained "\<\(japanese\|korean-hanja\|\(simp\|trad\)-chinese\)-\(in\)\=formal\>"
 syn match cssGeneratedContentAttr contained "\<korean-hangul-formal\>"
 syn region cssFunction contained matchgroup=cssFunctionName start="\<symbols\s*(" end=")" oneline keepend
+
+endif

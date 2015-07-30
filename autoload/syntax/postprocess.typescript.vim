@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    JS Lib syntax post process for typescript
 " Maintainer:  othree <othree@gmail.com>
@@ -9,3 +11,5 @@
 syntax cluster typescriptLibraryFuncs contains=@typescriptQFunctions,@typescript_Functions,@typescriptBFunctions,@typescriptpFunctions,@typescriptAFunctions,typescriptSFunctions,typescriptJFunctions,@typescriptRProp
 syntax cluster typescriptLibraryAttrs contains=@typescriptQAttrs,@typescript_Attrs,@typescriptBAttrs,@typescriptpAttrs,@typescriptAAttrs,@typescriptSAttrs,@typescriptJAttrs
 syntax match   typescriptLDot /\./ containedin=ALLBUT,typescriptComment,typescriptLineComment,typescriptString nextgroup=@typescriptLibraryFuncs,@typescriptLibraryAttrs
+
+endif

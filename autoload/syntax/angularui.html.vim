@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:   AngularUI for HTML
 " Maintainer: Tom Vincent <http://tlvince.com/contact>
@@ -12,3 +14,5 @@ syntax keyword htmlArg contained ui-hide ui-toggle ui-validate ui-date
 syntax keyword htmlArg contained ui-codemirror ui-ace ui-calendar ui-map
 syntax keyword htmlArg contained ui-select2 ui-tinymce ui-sortable ui-sref
 syntax keyword htmlArg contained ui-sref-active
+
+endif

@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    prelude.ls for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -34,4 +36,6 @@ if version >= 508 || !exists("did_prelude_ls_syntax_inits")
 
 
   delcommand HiLink
+endif
+
 endif

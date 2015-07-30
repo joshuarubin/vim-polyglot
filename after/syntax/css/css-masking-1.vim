@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
+  
 " TODO: create cssMaskingProp group and cssMaskingValue group
 syn match cssFontProp contained "\<clip-\(path\|rule\)\>"
 syn match cssFontProp contained "\<mask\(-\(image\|mode\|repeat\|position\|clip\|origin\|size\|composite\|type\)\)\=\>"
@@ -8,3 +10,5 @@ syn match cssFontAttr contained "\<no-clip\>"
 
 " http://www.w3.org/TR/css-masking/#MaskElement
 syn keyword cssTagName mask
+
+endif

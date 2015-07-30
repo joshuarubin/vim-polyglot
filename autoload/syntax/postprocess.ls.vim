@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    JS Lib syntax post process for ls
 " Maintainer:  othree <othree@gmail.com>
@@ -26,3 +28,5 @@ syntax match   lsLCompose />>/ containedin=ALLBUT,lsComment,lsLineComment,lsStri
 
 syntax region  lsString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@lsInterpString,@jSelectors
 syntax region  lsString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@lsSimpleString,@jSelectors
+
+endif

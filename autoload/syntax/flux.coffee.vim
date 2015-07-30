@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
+  
 " Vim syntax file
 " Language:    Flux for coffee
 " Maintainer:  othree <othree@gmail.com>
@@ -28,4 +30,6 @@ if version >= 508 || !exists("did_jquery_coffee_syntax_inits")
   HiLink coffeeFDispatcher     PreProc
 
   delcommand HiLink
+endif
+
 endif
