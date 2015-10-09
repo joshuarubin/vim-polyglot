@@ -1,7 +1,8 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
   
-" TODO: create cssInlineProp and cssInlineAttr
-syn match cssFontProp contained "\<initial-letter\(-align\)\="
-syn keyword cssFontAttr contained ideographic
+syn match cssFontProp contained "\<\(dominant\|alignment\)-baseline\>"
+syn match cssFontProp contained "\<baseline-shift\>"
+syn match cssFontProp contained "\<initial-letter\(-\(align\|wrap\)\)\="
+syn keyword cssFontAttr contained mathematical ideographic
 
 endif

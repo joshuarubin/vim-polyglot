@@ -70,7 +70,7 @@ autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'git') == -1
   
-autocmd BufNewFile,BufRead *.git/{,modules/**/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
+autocmd BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG set ft=gitcommit
 autocmd BufNewFile,BufRead *.git/config,.gitconfig,gitconfig,.gitmodules set ft=gitconfig
 autocmd BufNewFile,BufRead */.config/git/config                          set ft=gitconfig
 autocmd BufNewFile,BufRead *.git/modules/**/config                       set ft=gitconfig
@@ -310,7 +310,7 @@ autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   
