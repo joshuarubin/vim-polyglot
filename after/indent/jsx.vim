@@ -9,13 +9,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jsx') == -1
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Do nothing if we don't find the @jsx pragma (and we care).
-exec 'source '.fnameescape(expand('<sfile>:p:h:h').'/jsx-config.vim')
-if g:jsx_pragma_required && !b:jsx_pragma_found | finish | endif
-
-" Do nothing if we don't have the .jsx extension (and we care).
-if g:jsx_ext_required && !exists('b:jsx_ext_found') | finish | endif
-
 " Prologue; load in XML indentation.
 if exists('b:did_indent')
   let s:did_indent=b:did_indent
@@ -33,8 +26,8 @@ setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
 " XML indentkeys
 setlocal indentkeys+=*<Return>,<>>,<<>,/
 
-" Self-closing tag regex.
-let s:sctag = '^\s*\/>\s*;\='
+" Multiline end tag regex (line beginning with '>' or '/>')
+let s:endtag = '^\s*\/\?>\s*;\='
 
 " Get all syntax types at the beginning of a given line.
 fu! SynSOL(lnum)
@@ -83,13 +76,13 @@ fu! GetJsxIndent()
   if (SynXMLish(prevsyn) || SynJSXBlockEnd(prevsyn)) && SynXMLishAny(cursyn)
     let ind = XmlIndentGet(v:lnum, 0)
 
-    " Align '/>' with '<' for multiline self-closing tags.
-    if getline(v:lnum) =~? s:sctag
+    " Align '/>' and '>' with '<' for multiline tags.
+    if getline(v:lnum) =~? s:endtag
       let ind = ind - &sw
     endif
 
-    " Then correct the indentation of any JSX following '/>'.
-    if getline(v:lnum - 1) =~? s:sctag
+    " Then correct the indentation of any JSX following '/>' or '>'.
+    if getline(v:lnum - 1) =~? s:endtag
       let ind = ind + &sw
     endif
   else
