@@ -179,6 +179,7 @@ PACKS="
   vbnet:vim-scripts/vbnet.vim
   vcl:smerrill/vcl-vim-plugin
   vm:lepture/vim-velocity
+  vue:posva/vim-vue
   xls:vim-scripts/XSLT-syntax
   yaml:stephpy/vim-yaml
   yard:sheerun/vim-yardoc

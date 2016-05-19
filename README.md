@@ -109,6 +109,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [vbnet](https://github.com/vim-scripts/vbnet.vim) (syntax)
 - [vcl](https://github.com/smerrill/vcl-vim-plugin) (syntax, ftdetect)
 - [vm](https://github.com/lepture/vim-velocity) (syntax, indent, ftdetect)
+- [vue](https://github.com/posva/vim-vue) (syntax, ftdetect)
 - [xls](https://github.com/vim-scripts/XSLT-syntax) (syntax)
 - [yaml](https://github.com/stephpy/vim-yaml) (syntax, ftplugin)
 - [yard](https://github.com/sheerun/vim-yardoc) (syntax)

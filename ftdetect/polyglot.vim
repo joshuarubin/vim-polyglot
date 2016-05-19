@@ -479,3 +479,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vm') == -1
   
 au BufRead,BufNewFile *.vm set ft=velocity syntax=velocity
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vue') == -1
+  
+au BufNewFile,BufRead *.vue setf vue
+endif
