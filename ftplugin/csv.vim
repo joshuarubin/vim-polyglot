@@ -471,7 +471,7 @@ fu! <sid>WColumn(...) "{{{3
             " line is empty
             let line = getline(line('.')-1)
         else
-            let line=getline('.')
+            let line = getline('.')
         endif
         " move cursor to end of field
         "call search(b:col, 'ec', line('.'))
@@ -481,7 +481,7 @@ fu! <sid>WColumn(...) "{{{3
         let ret=len(fields)
         if exists("a:1") && a:1 > 0
             " bang attribute: Try to get the column name
-            let head  = split(getline(1),b:col.'\zs')
+            let head  = split(getline(get(b:, 'csv_headerline', 1)),b:col.'\zs')
             " remove preceeding whitespace
             if len(head) < ret
                 call <sid>Warn("Header has no field ". ret)
@@ -509,9 +509,12 @@ fu! <sid>MaxColumns(...) "{{{3
     let this_col = exists("a:1")
     "return maximum number of columns in first 10 lines
     if !exists("b:csv_fixed_width_cols")
-      let i = this_col ? a:1 : 1
+      let i = this_col ? a:1 : get(b:, 'csv_headerline', 1)
         while 1
             let l = getline(i, (this_col ? i : i+10))
+            if empty(l) && i >= line('$')
+                break
+            endif
 
             " Filter comments out
             let pat = '^\s*\V'. escape(b:csv_cmt[0], '\\')
@@ -622,6 +625,12 @@ fu! <sid>ArrangeCol(first, last, bang, limit, ...) range "{{{3
         let last = b:csv_headerline
       endif
     endif
+    if first > line('$')
+        let first=line('$')
+    endif
+    if last > line('$')
+        let last=line('$')
+    endif
     if &vbs
       echomsg printf("ArrangeCol Start: %d, End: %d", first, last)
     endif
@@ -632,6 +641,11 @@ fu! <sid>ArrangeCol(first, last, bang, limit, ...) range "{{{3
         call <sid>CalculateColumnWidth(row)
     endif
 
+    " abort on empty file
+    if !len(b:col_width)
+        call <sid>Warn("No column data detected, aborting ArrangeCol command!")
+        return
+    endif
     if &ro
        " Just in case, to prevent the Warning
        " Warning: W10: Changing read-only file
@@ -2591,7 +2605,7 @@ fu! <sid>SameFieldRegion() "{{{3
     let max = <sid>MaxColumns()
     let field = <sid>GetColumn(line('.'), col)
     let line = line('.')
-    
+
     let limit = [line, line]
     " Search upwards and downwards from the current position and find the
     " limit of the current selection
@@ -2810,7 +2824,10 @@ endfu
 fu! CSV_WCol(...) "{{{3
     " Needed for airline
     try
-        if exists("a:1") && (a:1 == 'Name' || a:1 == 1)
+        if line('$') == 1 && empty(getline(1))
+            " Empty file
+            return ''
+        elseif exists("a:1") && (a:1 == 'Name' || a:1 == 1)
             return printf("%s", <sid>WColumn(1))
         else
             return printf(" %d/%d", <SID>WColumn(), <SID>MaxColumns())

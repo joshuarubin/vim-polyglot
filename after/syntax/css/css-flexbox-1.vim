@@ -1,6 +1,5 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'css') == -1
   
-" TODO: create cssFlexboxProp group and cssFlexboxAttr group
 syn keyword cssFontProp order
 syn match cssFontProp contained "\<flex\(-\(basis\|direction\|flow\|grow\|shrink\|wrap\)\)\=\>"
 syn keyword cssFontAttr contained flex row wrap

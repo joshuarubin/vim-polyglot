@@ -19,6 +19,7 @@ let s:libs = [
   \ 'sugar',
   \ 'jasmine',
   \ 'chai',
+  \ 'ramda',
   \ 'react',
   \ 'flux',
   \ 'handlebars'

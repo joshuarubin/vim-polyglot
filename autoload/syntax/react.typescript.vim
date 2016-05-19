@@ -8,7 +8,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
 " URL:         https://facebook.github.io/react/docs/top-level-api.html
 " URL:         https://facebook.github.io/react/docs/component-api.html
 
-syntax keyword typescriptReact React containedin=ALLBUT,typescriptComment,typescriptLineComment,typescriptString,typescriptTemplate,typescriptTemplateSubstitution
+syntax keyword typescriptReact React ReactDOM containedin=ALLBUT,typescriptComment,typescriptLineComment,typescriptString,typescriptTemplate,typescriptTemplateSubstitution
 
 syntax keyword typescriptRTop contained createClass render unmountComponentAtNode renderToString
 syntax keyword typescriptRTop contained renderToStaticMarkup isValidElement DOM PropTypes
