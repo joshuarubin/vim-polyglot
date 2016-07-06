@@ -103,12 +103,22 @@ au BufNewFile,BufRead *.elm		set filetype=elm
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emberscript') == -1
   
+if !exists('g:vim_ember_script')
+  let g:vim_ember_script = 1
+endif
 autocmd BufNewFile,BufRead *.em set filetype=ember-script
 autocmd FileType ember-script set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'emblem') == -1
   
-autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+if !exists('g:vim_emblem')
+  let g:vim_emblem = 1
+endif
+if exists('g:vim_ember_script')
+  autocmd BufNewFile,BufRead *.emblem set filetype=emblem
+else
+  autocmd BufNewFile,BufRead *.em,*.emblem set filetype=emblem
+endif
 autocmd FileType emblem set tabstop=2|set shiftwidth=2|set expandtab
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'erlang') == -1
@@ -180,7 +190,7 @@ au BufNewFile,BufRead *.js setf javascript
 au BufNewFile,BufRead *.jsm setf javascript
 au BufNewFile,BufRead Jakefile setf javascript
 fun! s:SelectJavascript()
-  if getline(1) =~# '^#!.*/bin/env\s\+node\>'
+  if getline(1) =~# '^#!.*/bin/\%(env\s\+\)\?node\>'
     set ft=javascript
   endif
 endfun
@@ -452,11 +462,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'thrift') == -1
   
 au BufNewFile,BufRead *.thrift setlocal filetype=thrift
 endif
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'tmux') == -1
-  
-autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal filetype=tmux
-autocmd BufNewFile,BufRead {.,}tmux.conf{.*,} setlocal commentstring=#\ %s
-endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'toml') == -1
   
 autocmd BufNewFile,BufRead *.toml set filetype=toml
@@ -464,7 +469,7 @@ autocmd BufNewFile,BufRead Cargo.lock set filetype=toml
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'typescript') == -1
   
-autocmd BufNewFile,BufRead *.ts,*.tsx setfiletype typescript
+autocmd BufNewFile,BufRead *.ts,*.tsx setlocal filetype=typescript
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'vala') == -1
   
