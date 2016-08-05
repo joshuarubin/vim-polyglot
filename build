@@ -62,13 +62,17 @@ extract() {
 }
 
 copy_dir() {
-  for file in $(find "$1/$2" -name '*.vim'); do
+  for file in $(find "$1/$2" -type f \( -name '*.vim' -o -name '*.vital' \)); do
     file_path="$(dirname "${file##$1/}")"
     mkdir -p "$file_path"
-    touch "$file_path/$(basename "$file")"
 
     # Use comma instead of / to handle cases like c/c++
-    sed -e "s,%%PACK%%,$3," -e "/%%CONTENT%%/{r $file" -e "d;}" plugin_guard.vim.template >> $file_path/$(basename "$file")
+    if [[ $file == *".vim" ]]; then
+      touch "$file_path/$(basename "$file")"
+      sed -e "s,%%PACK%%,$3," -e "/%%CONTENT%%/{r $file" -e "d;}" plugin_guard.vim.template >> "$file_path/$(basename "$file")"
+    else
+      cp "$file" "$file_path/$(basename "$file")"
+    fi
   done
 }
 
