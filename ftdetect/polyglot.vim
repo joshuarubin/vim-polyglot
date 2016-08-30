@@ -252,8 +252,19 @@ au BufNewFile,BufRead *.ect set filetype=jst
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
   
-au BufRead,BufNewFile *.jl		let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
-au BufRead,BufNewFile *.jl		set filetype=julia
+if v:version < 704
+  " NOTE: this line fixes an issue with the default system-wide lisp ftplugin
+  "       which didn't define b:undo_ftplugin on older Vim versions
+  "       (*.jl files are recognized as lisp)
+  autocmd BufRead,BufNewFile *.jl    let b:undo_ftplugin = "setlocal comments< define< formatoptions< iskeyword< lisp<"
+endif
+autocmd BufRead,BufNewFile *.jl      set filetype=julia
+autocmd BufEnter *                   call LaTeXtoUnicode#Refresh()
+autocmd FileType *                   call LaTeXtoUnicode#Refresh()
+autocmd VimEnter *                    call LaTeXtoUnicode#Init()
+augroup L2UInit
+  autocmd InsertEnter *                   let g:did_insert_enter = 1 | call LaTeXtoUnicode#Init(0)
+augroup END
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'kotlin') == -1
   
@@ -359,7 +370,7 @@ endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -1
   
 if did_filetype()
-	  finish
+  finish
 endif
 autocmd BufRead,BufNewFile * :if getline(1) =~ '^.*startuml.*$'| setfiletype plantuml | set filetype=plantuml | endif
 autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml setfiletype plantuml | set filetype=plantuml

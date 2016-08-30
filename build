@@ -136,7 +136,7 @@ PACKS="
   jslib:othree/javascript-libraries-syntax.vim
   jst:briancollins/vim-jst
   jsx:mxw/vim-jsx:_ALL
-  julia:dcjones/julia-minimalist-vim
+  julia:JuliaLang/julia-vim
   kotlin:udalov/kotlin-vim
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
