@@ -290,6 +290,11 @@ au BufNewFile,BufRead */templates/**.liquid,*/layout/**.liquid,*/snippets/**.liq
       \ let b:liquid_subtype = 'html' |
       \ set ft=liquid |
 endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'livescript') == -1
+  
+autocmd BufNewFile,BufRead *.ls set filetype=ls
+autocmd BufNewFile,BufRead *Slakefile set filetype=ls
+endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'mako') == -1
   
 au BufRead,BufNewFile *.mako     set filetype=mako

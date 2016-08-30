@@ -25,6 +25,7 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 
 ## Language packs
 
+- [applescript](https://github.com/vim-scripts/applescript.vim) (syntax)
 - [ansible](https://github.com/pearofducks/ansible-vim) (syntax, indent, ftplugin, ftdetect)
 - [arduino](https://github.com/sudar/vim-arduino-syntax) (syntax, indent, ftdetect)
 - [blade](https://github.com/jwalton512/vim-blade) (syntax, indent, ftplugin, ftdetect)
@@ -43,8 +44,8 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [dockerfile](https://github.com/honza/dockerfile.vim) (syntax, ftdetect, plugin)
 - [elixir](https://github.com/elixir-lang/vim-elixir) (syntax, indent, compiler, ftplugin, ftdetect)
 - [elm](https://github.com/lambdatoast/elm.vim) (syntax, indent, autoload, ftplugin, ftdetect)
-- [emberscript](https://github.com/heartsentwined/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
-- [emblem](https://github.com/heartsentwined/vim-emblem) (syntax, indent, ftplugin, ftdetect)
+- [emberscript](https://github.com/yalesov/vim-ember-script) (syntax, indent, ftplugin, ftdetect)
+- [emblem](https://github.com/yalesov/vim-emblem) (syntax, indent, ftplugin, ftdetect)
 - [erlang](https://github.com/vim-erlang/vim-erlang-runtime) (syntax, indent, ftdetect)
 - [fish](https://github.com/dag/vim-fish) (syntax, indent, compiler, autoload, ftplugin, ftdetect, syntax_checkers)
 - [git](https://github.com/tpope/vim-git) (syntax, indent, ftplugin, ftdetect)
@@ -67,6 +68,8 @@ Optionally download one of the [releases](https://github.com/sheerun/vim-polyglo
 - [latex](https://github.com/LaTeX-Box-Team/LaTeX-Box) (syntax, indent, ftplugin)
 - [less](https://github.com/groenewege/vim-less) (syntax, indent, ftplugin, ftdetect)
 - [liquid](https://github.com/tpope/vim-liquid) (syntax, indent, ftplugin, ftdetect)
+- [livescript](https://github.com/gkz/vim-ls) (syntax, indent, compiler, ftplugin, ftdetect)
+- [lua](https://github.com/tbastos/vim-lua) (syntax, indent)
 - [mako](https://github.com/sophacles/vim-bundle-mako) (syntax, indent, ftplugin, ftdetect)
 - [markdown](https://github.com/tpope/vim-markdown) (syntax, ftplugin, ftdetect)
 - [nginx](https://github.com/othree/nginx-contrib-vim) (syntax, indent, ftdetect)

@@ -99,6 +99,7 @@ EOF
 }
 
 PACKS="
+  applescript:vim-scripts/applescript.vim
   ansible:pearofducks/ansible-vim
   arduino:sudar/vim-arduino-syntax
   blade:jwalton512/vim-blade
@@ -117,8 +118,8 @@ PACKS="
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
   elm:lambdatoast/elm.vim
-  emberscript:heartsentwined/vim-ember-script
-  emblem:heartsentwined/vim-emblem
+  emberscript:yalesov/vim-ember-script
+  emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
   git:tpope/vim-git
@@ -141,6 +142,8 @@ PACKS="
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
   liquid:tpope/vim-liquid
+  livescript:gkz/vim-ls
+  lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
   markdown:tpope/vim-markdown
   nginx:othree/nginx-contrib-vim
