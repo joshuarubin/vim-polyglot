@@ -3,8 +3,8 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'julia') == -1
 " Vim indent file
 " Language:	Julia
 " Maintainer:	Carlo Baldassi <carlobaldassi@gmail.com>
-" Last Change:	2014 may 29
-" Notes:        based on Bram Molenaar's indent file for vim
+" Last Change:	2016 jun 16
+" Notes:        originally based on Bram Molenaar's indent file for vim
 
 setlocal autoindent
 
@@ -21,7 +21,7 @@ if exists("*GetJuliaIndent")
   finish
 endif
 
-let s:skipPatterns = '\<julia\%(ComprehensionFor\|RangeEnd\|CommentL\|\%([bv]\|ip\|big\|MIME\|Shell\|Tri\|Printf\)\=String\|RegEx\|InQuote\)\>'
+let s:skipPatterns = '\<julia\%(ComprehensionFor\|ComprehensionIf\|RangeEnd\|CommentL\|\%([bsv]\|ip\|big\|MIME\|Shell\|Tri\|Printf\)\=String\|RegEx\|SymbolS\?\)\>'
 
 function JuliaMatch(lnum, str, regex, st)
   let s = a:st
@@ -255,7 +255,7 @@ function GetJuliaNestingBrackets(lnum, c)
   return [last_open_bracket, last_closed_bracket]
 endfunction
 
-let s:bracketBlocks = '\<julia\%(\%(\%(Printf\)\?Par\|SqBra\|CurBra\)Block\|ParBlockInRange\|StringVars\%(Par\|SqBra\|CurBra\)\)\>'
+let s:bracketBlocks = '\<julia\%(\%(\%(Printf\)\?Par\|SqBra\|CurBra\)Block\|ParBlockInRange\|StringVars\%(Par\|SqBra\|CurBra\)\|Dollar\%(Par\|SqBra\)\)\>'
 
 function IsInBrackets(lnum, c)
   let stack = map(synstack(a:lnum, a:c), 'synIDattr(v:val, "name")')

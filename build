@@ -77,7 +77,9 @@ copy_dir() {
 }
 
 concat_ftdetect() {
-  cat ftdetect/* | grep -E '^[^"]' > tmp/polyglot.vim
+  echo "augroup filetypedetect" > tmp/polyglot.vim
+  for f in ftdetect/*; do (echo '" '"$f"; cat "${f}"; echo) >> tmp/polyglot.vim; done
+  echo "augroup END" >> tmp/polyglot.vim
   rm -f ftdetect/*
   mv tmp/polyglot.vim ftdetect/
 }
@@ -122,6 +124,7 @@ PACKS="
   emblem:yalesov/vim-emblem
   erlang:vim-erlang/vim-erlang-runtime
   fish:dag/vim-fish
+  flatbuffers:zchee/vim-flatbuffers
   git:tpope/vim-git
   glsl:tikhomirov/vim-glsl
   groovy:vim-scripts/groovy.vim
@@ -145,7 +148,7 @@ PACKS="
   livescript:gkz/vim-ls
   lua:tbastos/vim-lua
   mako:sophacles/vim-bundle-mako
-  markdown:tpope/vim-markdown
+  markdown:plasticboy/vim-markdown
   nginx:othree/nginx-contrib-vim
   nim:zah/nim.vim:_BASIC
   nix:spwhitt/vim-nix
@@ -163,8 +166,10 @@ PACKS="
   puppet:voxpupuli/vim-puppet
   purescript:raichoo/purescript-vim
   python:mitsuhiko/vim-python-combined
+  python-compiler:aliev/vim-compiler-python
   qml:peterhoeg/vim-qml
   r-lang:vim-scripts/R.vim
+  raml:IN3D/vim-raml
   ragel:jneen/ragel.vim
   rspec:sheerun/rspec.vim
   rust:rust-lang/rust.vim
@@ -177,10 +182,10 @@ PACKS="
   systemd:kurayama/systemd-vim-syntax
   textile:timcharper/textile.vim
   thrift:solarnz/thrift.vim
-  tmux:tejr/vim-tmux
+  tmux:keith/tmux.vim
   tomdoc:wellbredgrapefruit/tomdoc.vim
   toml:cespare/vim-toml
-  twig:evidens/vim-twig
+  twig:lumiliet/vim-twig
   typescript:leafgarland/typescript-vim
   vala:tkztmk/vim-vala
   vbnet:vim-scripts/vbnet.vim

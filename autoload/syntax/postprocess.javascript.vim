@@ -3,7 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
 " Vim syntax file
 " Language:    JS Lib syntax post process for javascript
 " Maintainer:  othree <othree@gmail.com>
-" Last Change: 2016/05/04
+" Last Change: 2016/10/07
 " Version:     0.5
 " URL:         https://github.com/othree/javascript-libraries-syntax.vim
 "
@@ -13,6 +13,7 @@ syntax cluster props add=@javascriptpFunctions,@javascriptAFunctions,@javascript
 syntax cluster props add=@javascriptRaFunctions
 syntax cluster props add=@javascriptQAttrs,@javascript_Attrs,@javascriptBAttrs,@javascriptpAttrs,@javascriptAAttrs,@javascriptJAttrs
 syntax cluster props add=@javascriptRProp
+syntax cluster props add=@javascriptVFunctions,javascriptVAttrs
 
 if !exists("javascript_props")
   syntax match javascriptLDot /\./ containedin=ALLBUT,javascriptComment,javascriptLineComment,javascriptLineComment,javascriptString nextgroup=@props
