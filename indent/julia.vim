@@ -21,7 +21,7 @@ if exists("*GetJuliaIndent")
   finish
 endif
 
-let s:skipPatterns = '\<julia\%(ComprehensionFor\|ComprehensionIf\|RangeEnd\|CommentL\|\%([bsv]\|ip\|big\|MIME\|Shell\|Tri\|Printf\)\=String\|RegEx\|SymbolS\?\)\>'
+let s:skipPatterns = '\<julia\%(Comprehension\%(For\|If\)\|RangeEnd\|CommentL\|\%([bsv]\|ip\|big\|MIME\|Shell\|Printf\|Doc\)\=String\|RegEx\|SymbolS\?\)\>'
 
 function JuliaMatch(lnum, str, regex, st)
   let s = a:st
@@ -46,7 +46,7 @@ function GetJuliaNestingStruct(lnum)
   let blocks_stack = []
   let num_closed_blocks = 0
   while 1
-    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\=\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|type\|immutable\|let\|\%(bare\)\?module\|quote\|do\)\>', s)
+    let fb = JuliaMatch(a:lnum, line, '@\@<!\<\%(if\|else\%(if\)\=\|while\|for\|try\|catch\|finally\|\%(staged\)\?function\|macro\|begin\|mutable\s\+struct\|\%(mutable\s\+\)\@<!struct\|\%(abstract\|primitive\)\s\+type\|\%(\%(abstract\|primitive\)\s\+\)\@<!type\|immutable\|let\|\%(bare\)\?module\|quote\|do\)\>', s)
     let fe = JuliaMatch(a:lnum, line, '@\@<!\<end\>', s)
 
     if fb < 0 && fe < 0
@@ -128,9 +128,13 @@ function GetJuliaNestingStruct(lnum)
         continue
       endif
 
-      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|type\|immutable\|let\|quote\|do\)\>', s)
+      let i = JuliaMatch(a:lnum, line, '@\@<!\<\%(while\|for\|\%(staged\)\?function\|macro\|begin\|\%(mutable\s\+\)\?struct\|\%(\%(abstract\|primitive\)\s\+\)\?type\|immutable\|let\|quote\|do\)\>', s)
       if i >= 0 && i == fb
-        let s = i+1
+        if match(line, '\<\%(mutable\|abstract\|primitive\)', i) != -1
+          let s = i+11
+        else
+          let s = i+1
+        endif
         call add(blocks_stack, 'other')
         continue
       endif

@@ -3,9 +3,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -
 " Vim syntax file
 " Language:     PlantUML
 " Maintainer:   Anders Thøgersen <first name at bladre dot dk>
-" Last Change:  03-Apr-2011
 " Version:      0.2
-" TODO:         There are some bugs, add << >>
 "
 if exists("b:current_syntax")
   finish
@@ -25,7 +23,7 @@ syntax sync minlines=100
 syntax match plantumlPreProc /\%(^@startuml\|^@enduml\)\|!\%(include\|define\|undev\|ifdef\|endif\|ifndef\)\s*.*/ contains=plantumlDir
 syntax region plantumlDir start=/\s\+/ms=s+1 end=/$/ contained
 
-syntax keyword plantumlTypeKeyword actor participant usecase abstract enum component state object artifact folder rect node frame cloud database storage agent boundary control entity card
+syntax keyword plantumlTypeKeyword actor participant usecase abstract enum component state object artifact folder rect node frame cloud database storage agent boundary control entity card rectangle
 syntax keyword plantumlKeyword as also autonumber caption title newpage box alt opt loop par break critical note rnote hnote legend group left right of on link over end activate deactivate destroy create footbox hide show skinparam skin top bottom
 syntax keyword plantumlKeyword package namespace page up down if else elseif endif partition footer header center rotate ref return is repeat start stop while endwhile fork again kill
 syntax keyword plantumlKeyword then detach
@@ -131,8 +129,8 @@ syntax keyword plantumlSkinparamKeyword ActorBackgroundColor ActorBorderColor Ac
 syntax keyword plantumlSkinparamKeyword ActorFontSize ActorFontStyle ActorStereotypeFontColor ActorStereotypeFontName
 syntax keyword plantumlSkinparamKeyword ActorStereotypeFontSize ActorStereotypeFontStyle ArrowColor ArrowFontColor
 syntax keyword plantumlSkinparamKeyword ArrowFontName ArrowFontSize ArrowFontStyle AttributeFontColor AttributeFontName
-syntax keyword plantumlSkinparamKeyword AttributeFontSize AttributeFontStyle AttributeIconSize BackgroundColor BarColor
-syntax keyword plantumlSkinparamKeyword BorderColor CharacterFontColor CharacterFontName CharacterFontSize
+syntax keyword plantumlSkinparamKeyword AttributeFontSize AttributeFontStyle AttributeIconSize BarColor
+syntax keyword plantumlSkinparamKeyword BorderColor BoxPadding CharacterFontColor CharacterFontName CharacterFontSize
 syntax keyword plantumlSkinparamKeyword CharacterFontStyle CharacterRadius Color DividerBackgroundColor
 syntax keyword plantumlSkinparamKeyword DividerFontColor DividerFontName DividerFontSize DividerFontStyle EndColor
 syntax keyword plantumlSkinparamKeyword FontColor FontName FontSize FontStyle GroupBackgroundColor GroupingFontColor
@@ -141,10 +139,8 @@ syntax keyword plantumlSkinparamKeyword GroupingHeaderFontName GroupingHeaderFon
 syntax keyword plantumlSkinparamKeyword InterfaceBackgroundColor InterfaceBorderColor LifeLineBackgroundColor
 syntax keyword plantumlSkinparamKeyword LifeLineBorderColor ParticipantBackgroundColor ParticipantBorderColor
 syntax keyword plantumlSkinparamKeyword ParticipantFontColor ParticipantFontName ParticipantFontSize
-syntax keyword plantumlSkinparamKeyword ParticipantFontStyle StartColor stateArrowColor stereotypeABackgroundColor
-syntax keyword plantumlSkinparamKeyword stereotypeCBackgroundColor stereotypeEBackgroundColor StereotypeFontColor
+syntax keyword plantumlSkinparamKeyword ParticipantFontStyle ParticipantPadding StartColor StereotypeFontColor
 syntax keyword plantumlSkinparamKeyword StereotypeFontName StereotypeFontSize StereotypeFontStyle
-syntax keyword plantumlSkinparamKeyword stereotypeIBackgroundColor TitleFontColor TitleFontName TitleFontSize TitleFontStyle
 
 " Highlight
 highlight default link plantumlCommentTODO Todo

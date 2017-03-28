@@ -31,6 +31,7 @@ syn include @htmlCss syntax/css/css-break-3.vim
 syn include @htmlCss syntax/css/css-cascade-3.vim
 syn include @htmlCss syntax/css/css-cascade-4.vim
 syn include @htmlCss syntax/css/css-color-4.vim
+syn include @htmlCss syntax/css/css-contain-1.vim
 syn include @htmlCss syntax/css/css-content-3.vim
 syn include @htmlCss syntax/css/css-counter-styles-3.vim
 syn include @htmlCss syntax/css/css-device-adapt-1.vim
@@ -52,16 +53,19 @@ syn include @htmlCss syntax/css/css-position-3.vim
 syn include @htmlCss syntax/css/css-properties-values-api-1.vim
 syn include @htmlCss syntax/css/css-pseudo-4.vim
 syn include @htmlCss syntax/css/css-regions-1.vim
+syn include @htmlCss syntax/css/css-rhythm-1.vim
 syn include @htmlCss syntax/css/css-round-display-1.vim
 syn include @htmlCss syntax/css/css-ruby-1.vim
 syn include @htmlCss syntax/css/css-scoping-1.vim
 syn include @htmlCss syntax/css/css-scroll-snap-1.vim
 syn include @htmlCss syntax/css/css-shapes-1.vim
 syn include @htmlCss syntax/css/css-sizing-3.vim
+syn include @htmlCss syntax/css/css-style-attr.vim
 syn include @htmlCss syntax/css/css-syntax-3.vim
 syn include @htmlCss syntax/css/css-text-3.vim
 syn include @htmlCss syntax/css/css-text-4.vim
 syn include @htmlCss syntax/css/css-text-decor-3.vim
+syn include @htmlCss syntax/css/css-timing-1.vim
 syn include @htmlCss syntax/css/css-transforms-1.vim
 syn include @htmlCss syntax/css/css-typed-om-1.vim
 syn include @htmlCss syntax/css/css-ui-3.vim
@@ -78,6 +82,7 @@ syn include @htmlCss syntax/css/css3-conditional.vim
 syn include @htmlCss syntax/css/css3-exclusions.vim
 syn include @htmlCss syntax/css/css3-images.vim
 syn include @htmlCss syntax/css/css3-multicol.vim
+syn include @htmlCss syntax/css/css3-namespace.vim
 syn include @htmlCss syntax/css/css3-page.vim
 syn include @htmlCss syntax/css/css3-speech.vim
 syn include @htmlCss syntax/css/css3-transitions.vim
@@ -107,6 +112,22 @@ syn region ShaderScript
       \ keepend
       \ end="</script>"me=s-1
       \ contains=@GLSL,htmlScriptTag,@htmlPreproc
+
+endif
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'html5') == -1
+  
+" Vim syntax file
+" Language:     HTML (version 5.1)
+" Last Change:  2017 Feb 15
+" License:      Public domain
+"               (but let me know if you like :) )
+"
+" Maintainer:   Kao, Wei-Ko(othree) ( othree AT gmail DOT com )
+
+" Comment
+" https://github.com/w3c/html/issues/694
+syntax region htmlComment start=+<!--+ end=+-->+ contains=@Spell
+syntax region htmlComment start=+<!DOCTYPE+ keepend end=+>+
 
 endif
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1

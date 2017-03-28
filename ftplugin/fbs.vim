@@ -1,6 +1,6 @@
 if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'flatbuffers') == -1
   
-" Copyright 2016 The clang-server Authors. All rights reserved.
+" Copyright 2016 The vim-flatbuffers Authors. All rights reserved.
 " Use of this source code is governed by a BSD-style
 " license that can be found in the LICENSE file.
 
@@ -18,8 +18,11 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
+setlocal comments=s1:/*,mb:*,ex:*/,://
 setlocal commentstring=//\ %s
 setlocal expandtab
+setlocal formatoptions-=t
+setlocal shiftwidth=2
 
 
 let b:undo_ftplugin = ""

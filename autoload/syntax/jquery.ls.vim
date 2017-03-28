@@ -4,7 +4,7 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
 " Language:    jQuery for ls
 " Maintainer:  othree <othree@gmail.com>
 " Maintainer:  Bruno Michel <brmichel@free.fr>
-" Last Change: 2014/10/29
+" Last Change: 2017/02/15
 " Version:     1.9.0.2
 " URL:         http://api.jquery.com/
 
@@ -13,7 +13,7 @@ if exists("b:current_syntax") && b:current_syntax == 'ls'
   setlocal iskeyword+=$
 endif
 
-syntax keyword lsjQuery jQuery $ containedin=ALLBUT,lsComment,lsLineComment,lsString,lsTemplate,lsTemplateSubstitution
+syntax keyword lsjQuery jQuery $ containedin=ALLBUT,lsComment,lsLineComment,lsString,lsTemplate,lsTemplateSubstitution nextgroup=@lsAfterIdentifier
 " syntax match   lsjQuerydot       contained /\./ nextgroup=@lsQGlobals
 " syntax match   lsjQuerydot       contained /([^)]*)\./ nextgroup=@lsQFunctions
 

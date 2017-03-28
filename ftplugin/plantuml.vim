@@ -3,7 +3,6 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'plantuml') == -
 " Vim plugin file
 " Language:     PlantUML
 " Maintainer:   Aaron C. Meadows < language name at shadowguarddev dot com>
-" Last Change:  19-Jun-2012
 " Version:      0.1
 
 if exists("b:loaded_plantuml_plugin")
