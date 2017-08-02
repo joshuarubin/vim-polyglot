@@ -42,11 +42,14 @@ syn include @htmlCss syntax/css/css-fonts-3.vim
 syn include @htmlCss syntax/css/css-fonts-4.vim
 syn include @htmlCss syntax/css/css-gcpm-3.vim
 syn include @htmlCss syntax/css/css-grid-1.vim
+syn include @htmlCss syntax/css/css-images-4.vim
 syn include @htmlCss syntax/css/css-inline-3.vim
 syn include @htmlCss syntax/css/css-line-grid-1.vim
 syn include @htmlCss syntax/css/css-lists-3.vim
+syn include @htmlCss syntax/css/css-logical-1.vim
 syn include @htmlCss syntax/css/css-masking-1.vim
 syn include @htmlCss syntax/css/css-overflow-3.vim
+syn include @htmlCss syntax/css/css-overflow-4.vim
 syn include @htmlCss syntax/css/css-page-floats-3.vim
 syn include @htmlCss syntax/css/css-paint-api-1.vim
 syn include @htmlCss syntax/css/css-position-3.vim
@@ -88,6 +91,7 @@ syn include @htmlCss syntax/css/css3-speech.vim
 syn include @htmlCss syntax/css/css3-transitions.vim
 syn include @htmlCss syntax/css/cssom-1.vim
 syn include @htmlCss syntax/css/cssom-view-1.vim
+syn include @htmlCss syntax/css/fill-stroke-3.vim
 syn include @htmlCss syntax/css/filter-effects-1.vim
 syn include @htmlCss syntax/css/geometry-1.vim
 syn include @htmlCss syntax/css/html5.vim
@@ -135,11 +139,11 @@ if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'jslib') == -1
 " Vim plugin file
 " Language:    
 " Maintainer:  othree <othree@gmail.com>
-" Last Change: 2013/08/26
-" Version:     0.5.1
+" Last Change: 2017/04/18
+" Version:     0.4.2
 " URL:         https://github.com/othree/javascript-libraries-syntax.vim
 
-if b:current_syntax == 'html'
+if exists('b:current_syntax') && b:current_syntax == 'html'
   call jslibsyntax#load()
 endif
 

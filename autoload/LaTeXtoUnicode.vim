@@ -64,9 +64,12 @@ function! s:L2U_SetupGlobal()
       let g:latex_to_unicode_auto = 0
   endif
 
-  " YouCompleteMe and neocomplcache plug-ins do not work well with LaTeX symbols
-  " suggestions
-  if exists("g:loaded_youcompleteme") || exists("g:loaded_neocomplcache")
+  " YouCompleteMe and neocomplcache/neocomplete/deoplete plug-ins do not work well
+  " with LaTeX symbols suggestions
+  if exists("g:loaded_youcompleteme") ||
+        \ exists("g:loaded_neocomplcache") ||
+        \ exists("g:loaded_neocomplete") ||
+        \ exists("g:loaded_deoplete")
     let g:latex_to_unicode_suggestions = 0
   endif
 
@@ -112,7 +115,7 @@ endfunction
 function! LaTeXtoUnicode#Enable()
 
   if b:l2u_enabled
-    return ""
+    return
   end
 
   call s:L2U_ResetLastCompletionInfo()
@@ -126,17 +129,17 @@ function! LaTeXtoUnicode#Enable()
   " will actually initialize all the LaTeX-to-Unicode substitutions.
   call LaTeXtoUnicode#Init()
 
-  return ""
+  return
 
 endfunction
 
 function! LaTeXtoUnicode#Disable()
   if !b:l2u_enabled
-    return ""
+    return
   endif
   let b:l2u_enabled = 0
   call LaTeXtoUnicode#Init()
-  return ""
+  return
 endfunction
 
 " Translate old options to their new equivalents
@@ -307,12 +310,14 @@ function! LaTeXtoUnicode#omnifunc(findstart, base)
       " ...return the Unicode symbol
       return [g:l2u_symbols_dict[a:base]]
     endif
-    " here, only partial matches were found; either keep just the longest
-    " common prefix, or pass them on
-    if !suggestions
-      let partmatches = [s:L2U_longest_common_prefix(partmatches)]
-    else
-      call sort(partmatches, "s:L2U_partmatches_sort")
+    if !empty(partmatches)
+      " here, only partial matches were found; either keep just the longest
+      " common prefix, or pass them on
+      if !suggestions
+        let partmatches = [s:L2U_longest_common_prefix(partmatches)]
+      else
+        call sort(partmatches, "s:L2U_partmatches_sort")
+      endif
     endif
     if empty(partmatches)
       call feedkeys(s:l2u_esc_sequence, 'n')
@@ -320,6 +325,11 @@ function! LaTeXtoUnicode#omnifunc(findstart, base)
     endif
     return partmatches
   endif
+endfunction
+
+function! LaTeXtoUnicode#PutLiteral(k)
+  call feedkeys(a:k, 'ni')
+  return ''
 endfunction
 
 " Function which saves the current insert-mode mapping of a key sequence `s`
@@ -346,6 +356,11 @@ function! s:L2U_SetFallbackMapping(s, k)
     let cmd = 'inoremap '
   else
     let cmd = 'imap '
+    " This is a nasty hack used to prevent infinite recursion. It's not a
+    " general solution.
+    if mmdict["expr"]
+      let rhs = substitute(rhs, '\c' . a:s, "\<C-R>=LaTeXtoUnicode#PutLiteral('" . a:s . "')\<CR>", 'g')
+    endif
   endif
   exe cmd . pre . ' ' . a:k . ' ' . rhs
 endfunction
@@ -366,6 +381,7 @@ function! LaTeXtoUnicode#Tab()
   " completion is to substitute the final string
   let b:l2u_backup_commpleteopt = &completeopt
   set completeopt+=longest
+  set completeopt-=noinsert
   " invoke omnicompletion; failure to perform LaTeX-to-Unicode completion is
   " handled by the CompleteDone autocommand.
   return "\<C-X>\<C-O>"
@@ -603,8 +619,7 @@ function! LaTeXtoUnicode#Toggle()
     call LaTeXtoUnicode#Enable()
     echo "LaTeX-to-Unicode enabled"
   endif
-  return ""
+  return
 endfunction
-
 
 endif

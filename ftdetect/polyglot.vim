@@ -21,6 +21,12 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
+" asciidoc:asciidoc/vim-asciidoc
+autocmd BufNewFile,BufRead *.asciidoc,*.adoc
+	\ set ft=asciidoc
+augroup END
+
+augroup filetypedetect
 " yaml:stephpy/vim-yaml
 augroup END
 
@@ -64,7 +70,7 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" caddyfile:joshglendenning/vim-caddyfile
+" caddyfile:isobit/vim-caddyfile
 au BufNewFile,BufRead Caddyfile set ft=caddyfile
 augroup END
 
@@ -171,8 +177,6 @@ augroup filetypedetect
 au BufRead,BufNewFile *.ex,*.exs call s:setf('elixir')
 au BufRead,BufNewFile *.eex call s:setf('eelixir')
 au BufRead,BufNewFile * call s:DetectElixir()
-
-au FileType elixir,eelixir setl sw=2 sts=2 et iskeyword+=!,?
 
 function! s:setf(filetype) abort
   let &filetype = a:filetype
@@ -303,13 +307,20 @@ augroup filetypedetect
 " Language: OpenGL Shading Language
 " Maintainer: Sergey Tikhomirov <sergey@tikhomirov.io>
 
-autocmd! BufNewFile,BufRead *.glsl,*.geom,*.vert,*.frag,*.gsh,*.vsh,*.fsh,*.vs,*.fs,*.gs,*.tcs,*.tes,*.tesc,*.tese,*.comp set filetype=glsl
+" Extensions supported by Khronos reference compiler (with one exception, ".glsl")
+" https://github.com/KhronosGroup/glslang
+autocmd! BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set filetype=glsl
 
 " vim:set sts=2 sw=2 :
 augroup END
 
 augroup filetypedetect
 " gnuplot:vim-scripts/gnuplot-syntax-highlighting
+augroup END
+
+augroup filetypedetect
+" graphql:jparise/vim-graphql
+au BufRead,BufNewFile *.graphql,*.gql setfiletype graphql
 augroup END
 
 augroup filetypedetect
@@ -361,10 +372,16 @@ augroup END
 
 augroup filetypedetect
 " javascript:pangloss/vim-javascript:_JAVASCRIPT
-au BufNewFile,BufRead *.js setf javascript
-au BufNewFile,BufRead *.jsm setf javascript
-au BufNewFile,BufRead Jakefile setf javascript
-au BufNewFile,BufRead *.es6 setf javascript
+au BufNewFile,BufRead *.{js,jsm,es,es6},Jakefile setf javascript
+
+fun! s:SourceFlowSyntax()
+  if !exists('javascript_plugin_flow') && !exists('b:flow_active') &&
+        \ search('\v\C%^\_s*%(//\s*|/\*[ \t\n*]*)\@flow>','nw')
+    runtime extras/flow.vim
+    let b:flow_active = 1
+  endif
+endfun
+au FileType javascript au BufRead,BufWritePost <buffer> call s:SourceFlowSyntax()
 
 fun! s:SelectJavascript()
   if getline(1) =~# '^#!.*/bin/\%(env\s\+\)\?node\>'
@@ -432,15 +449,16 @@ if !exists('g:jsx_pragma_required')
   let g:jsx_pragma_required = 0
 endif
 
-if g:jsx_pragma_required
-  " Look for the @jsx pragma.  It must be included in a docblock comment before
-  " anything else in the file (except whitespace).
-  let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
-  let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
-endif
+let s:jsx_pragma_pattern = '\%^\_s*\/\*\*\%(\_.\%(\*\/\)\@!\)*@jsx\_.\{-}\*\/'
 
 " Whether to set the JSX filetype on *.js files.
 fu! <SID>EnableJSX()
+  if g:jsx_pragma_required && !exists('b:jsx_ext_found')
+    " Look for the @jsx pragma.  It must be included in a docblock comment
+    " before anything else in the file (except whitespace).
+    let b:jsx_pragma_found = search(s:jsx_pragma_pattern, 'npw')
+  endif
+
   if g:jsx_pragma_required && !b:jsx_pragma_found | return 0 | endif
   if g:jsx_ext_required && !exists('b:jsx_ext_found') | return 0 | endif
   return 1
@@ -463,16 +481,18 @@ endif
 
 autocmd BufRead,BufNewFile *.jl      set filetype=julia
 
-autocmd BufEnter *                   call LaTeXtoUnicode#Refresh()
 autocmd FileType *                   call LaTeXtoUnicode#Refresh()
-
-autocmd VimEnter *                    call LaTeXtoUnicode#Init()
+autocmd BufEnter *                   call LaTeXtoUnicode#Refresh()
 
 " This autocommand is used to postpone the first initialization of LaTeXtoUnicode as much as possible,
 " by calling LaTeXtoUnicode#SetTab amd LaTeXtoUnicode#SetAutoSub only at InsertEnter or later
-augroup L2UInit
-  autocmd InsertEnter *                   let g:did_insert_enter = 1 | call LaTeXtoUnicode#Init(0)
-augroup END
+function! s:L2UTrigger()
+  augroup L2UInit
+    autocmd!
+    autocmd InsertEnter *            let g:did_insert_enter = 1 | call LaTeXtoUnicode#Init(0)
+  augroup END
+endfunction
+autocmd BufEnter *                   call s:L2UTrigger()
 augroup END
 
 augroup filetypedetect
@@ -542,11 +562,12 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
-" nginx:othree/nginx-contrib-vim
+" nginx:chr4/nginx.vim
 au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile nginx*.conf set ft=nginx
+au BufRead,BufNewFile *nginx.conf set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
 au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
-au BufRead,BufNewFile nginx.conf set ft=nginx
 augroup END
 
 augroup filetypedetect
@@ -636,11 +657,6 @@ augroup END
 
 augroup filetypedetect
 " plantuml:aklt/plantuml-syntax
-" Vim ftdetect file
-" Language:     PlantUML
-" Maintainer:   Aaron C. Meadows < language name at shadowguarddev dot com>
-" Version:      0.1
-
 if did_filetype()
   finish
 endif
@@ -739,6 +755,11 @@ augroup filetypedetect
 augroup END
 
 augroup filetypedetect
+" racket:wlangstroth/vim-racket
+au BufRead,BufNewFile *.rkt,*.rktl  set filetype=racket
+augroup END
+
+augroup filetypedetect
 " raml:IN3D/vim-raml
 au BufRead,BufNewFile *.raml set ft=raml
 augroup END
@@ -757,7 +778,7 @@ augroup filetypedetect
 
 " Support functions {{{
 function! s:setf(filetype) abort
-  if &filetype !=# a:filetype
+  if &filetype !~# '\<'.a:filetype.'\>'
     let &filetype = a:filetype
   endif
 endfunction

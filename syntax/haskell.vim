@@ -13,10 +13,6 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-if !exists('g:haskell_disable_TH')
-    let g:haskell_disable_TH = 0
-endif
-
 if get(g:, 'haskell_backpack', 0)
   syn keyword haskellBackpackStructure unit signature
   syn keyword haskellBackpackDependency dependency
